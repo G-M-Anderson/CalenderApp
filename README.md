@@ -7,7 +7,8 @@ Creating a Calendar application, to be developed as part of the Software Enginee
 
 # Project Structure
 
-Folders and Files
+Folders and Files:
+
     - calendar/ : Contains the core application code.
        - __calendar_init__.py : To be used to have cleaner interface by importing functions and classes, as well as holding some modules.
        - calendar.py : The main module for calendar functionality.
