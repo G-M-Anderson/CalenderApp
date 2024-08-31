@@ -1,4 +1,4 @@
-**Calendar App for Software Engineering Fall 2024**
+# **Calendar App for Software Engineering Fall 2024**
 
 # Overview
 
