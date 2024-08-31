@@ -29,5 +29,6 @@ Folders and Files:
 
 Made some basic folders Calendar, Config and Tests to get us started. - 8/31, Garrett
 
-Added 3 files under calendar folder, 1 file under config folder and 2 files under tests folder. -8/31, Garrett
+Added 3 files under calendar folder, 1 file under config folder and 2 files under tests folder. - 8/31, Garrett
 
+Imported datetime library and created basic functions to get current date. - 8/31, Garrett

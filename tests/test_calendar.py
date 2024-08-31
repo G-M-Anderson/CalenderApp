@@ -2,7 +2,7 @@
 
 import unittest
 from datetime import datetime
-from calendar.calendar import get_today_date
+from Calendar.calendar import get_today_date
 
 class TestCalendar(unittest.TestCase):
     def test_get_today_date(self):
