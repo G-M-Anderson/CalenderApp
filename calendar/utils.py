@@ -11,4 +11,3 @@ def format_date(date):
 def parse_date(date_str):
     """Parse a date string into a datetime object"""
     return datetime.strptime(date_str, '%Y-%m-%d')
-    

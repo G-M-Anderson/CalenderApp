@@ -17,6 +17,10 @@ Folders and Files:
     * config/ : Contains configuration files. 
        * config.yaml : Configuration file for application settings (Formating, etc.)
 
+    * gui/: Contains GUI codes and files
+       * __gui_init__.py : Used to have cleaner interface for the GUI, by holding functions and classes.
+       * app.py : GUI codes and functions stored here. 
+
     * tests/ : Contains test files.
        * __tests_init__.py : Can be empty or contain setup code for tests. This file initializes the test package. 
        * test_calendar.py : Where tests for the calendar functionality should be written. 
@@ -32,3 +36,5 @@ Made some basic folders Calendar, Config and Tests to get us started. - 8/31, Ga
 Added 3 files under calendar folder, 1 file under config folder and 2 files under tests folder. - 8/31, Garrett
 
 Imported datetime library and created basic functions to get current date. - 8/31, Garrett
+
+Imported Tkinter library and added basic functions for GUI. -9/2, Garrett
