@@ -2,7 +2,7 @@
 
 # Overview
 
-Creating a Calendar application, to be developed as part of the Software Engineering course for Fall 2024. The initial project structure was created on 8/31 to facilitate development and testing. 
+Creating a Calendar application, to be developed as part of the Software Engineering course for Fall 2024. The initial project structure was created on 8/31 to facilitate development and testing. This calendar will be interactive and allows the user to tailor it to their needs.
 
 
 # Project Structure
