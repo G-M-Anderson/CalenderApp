@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Current Weather</title>
+    <style>
+      /* Style for the weather page */
+body {
+    font-family: 'Roboto', sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background: linear-gradient(135deg, #74ebd5, #ACB6E5); /* Gradient background */
+}
+
+.container {
+    background-color: rgba(255, 255, 255, 0.8); /* Semi-transparent white background */
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+    text-align: center;
+    width: 300px;
+}
+
+h1 {
+    font-size: 30px;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+#weather {
+    font-size: 18px;
+    color: #555;
+    line-height: 1.6;
+}
+
+button {
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: #5b9bd5;
+    border: none;
+    color: white;
+    font-size: 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #3b6ca0;
+}
+
+.error {
+    color: red;
+    font-weight: bold;
+}
+
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Current Weather</h1>
+      <div id="weather">Loading weather data...</div>
+      <button onclick="window.location.href='./index.html'">Back to Calendar</button>
+  </div>
+
+    <script>
+      // Your WeatherAPI key
+      const apiKey = "1ebf2ff3d9994f5497a151345242409";
+
+      // You can get the user's location via browser's Geolocation API or use a predefined city
+      navigator.geolocation.getCurrentPosition(success, error);
+
+      function success(position) {
+        const latitude = position.coords.latitude;
+        const longitude = position.coords.longitude;
+
+        // Fetch weather data using WeatherAPI
+        fetch(
+          `https://api.weatherapi.com/v1/current.json?key=1ebf2ff3d9994f5497a151345242409&q=${latitude},${longitude}`
+        )
+          .then((response) => response.json())
+          .then((data) => {
+            const weatherDiv = document.getElementById("weather");
+            const weatherInfo = `
+                    <p>Location: ${data.location.name}, ${data.location.region}</p>
+                    <p>Temperature: ${data.current.temp_c}°C</p>
+                    <p>Condition: ${data.current.condition.text}</p>
+                    <p>Wind: ${data.current.wind_kph} kph</p>
+                    <p>Humidity: ${data.current.humidity}%</p>
+                `;
+            weatherDiv.innerHTML = weatherInfo;
+          })
+          .catch((error) => {
+            document.getElementById("weather").textContent =
+              "Failed to load weather data.";
+            console.error("Error fetching weather data:", error);
+          });
+      }
+
+      function error() {
+        document.getElementById("weather").textContent =
+          "Unable to retrieve your location.";
+      }
+    </script>
+  </body>
+</html>
