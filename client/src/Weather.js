@@ -24,13 +24,12 @@ const Weather = () => {
 
   return (
     <div className="container">
-      <h1>Current Weather</h1>
       {error ? (
         <div className="error">{error}</div>
       ) : weatherData ? (
         <div id="weather">
           <p>Location: {weatherData.location.name}, {weatherData.location.region}</p>
-          <p>Temperature: {weatherData.current.temp_c}°C</p>
+          <p>Temperature: {weatherData.current.temp_f}°F</p>
           <p>Condition: {weatherData.current.condition.text}</p>
           <p>Wind: {weatherData.current.wind_kph} kph</p>
           <p>Humidity: {weatherData.current.humidity}%</p>

@@ -28,6 +28,94 @@
   color: #61dafb;
 }
 
+.container {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+  padding: 20px;
+}
+
+.left {
+  flex: 2; /* Adjust the width ratio of the calendar */
+  margin-right: 20px;
+}
+
+.right {
+  flex: 1; /* Adjust the width ratio of the right column */
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.create-event-form {
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  background-color: #f9f9f9;
+}
+
+.login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+.weather-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 20px;
+  color: #8743b4;
+}
+/* Add width to the parent container */
+#event-form-root {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start; /* Align items to the left */
+  width: 100%; /* Ensure it takes full width */
+  max-width: 500px; /* Optional: Restrict maximum width for a better layout */
+  padding: 20px; /* Add padding for breathing room */
+  box-sizing: border-box; /* Include padding in width/height calculations */
+}
+.react-datetime-picker {
+  display: flex;
+  align-items: center;
+  gap: 10px; /* Add spacing between inputs */
+  width: 100%; /* Add padding for overall size */
+}
+.react-datetime-picker__wrapper {
+  border: 1px solid #ccc; /* Add border for clarity */
+  border-radius: 5px; /* Rounded corners */
+  padding: 5px; /* Add padding inside the wrapper */
+  width: 100%; /* Make sure the wrapper stretches */
+  display: flex; /* Flexbox for proper alignment */
+  justify-content: space-between; /* Space out the child elements */
+}
+.react-datetime-picker__inputGroup__input {
+  width: 50px; /* Increase input width */
+  height: 40px; /* Increase input height */
+  font-size: 1rem; /* Increase font size */
+  text-align: center; /* Center the text inside inputs */
+}
+.react-datetime-picker .react-datetime-picker__inputGroup {
+  display: flex; /* Ensure proper alignment */
+  justify-content: space-between; /* Add spacing between elements */
+  gap: 5px;
+  width: 100%; /* Ensure full width */
+}
+.react-datetime-picker__inputGroup__divider {
+  margin: 0 5px; /* Add space around dividers */
+}
+.react-datetime-picker__inputGroup {
+  gap: 5px; /* Add space between inputs within the group */
+}
+
+.react-datetime-picker__button {
+  width: 30px; /* Adjust button width */
+  height: 30px; /* Adjust button height */
+  font-size: 1rem; /* Adjust font size */
+}
+
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);
