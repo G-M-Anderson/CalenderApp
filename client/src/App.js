@@ -10,6 +10,8 @@ function App() {
   const supabase = useSupabaseClient();
   const { isLoading } = useSessionContext();
   const [showDropdown, setShowDropdown] = useState(false);
+  const [showThemeDropdown, setShowThemeDropdown] = useState(false); //tst
+  const [themeColor, setThemeColor] = useState('purple'); //test
 
   if (isLoading) {
     return <></>; // Loading state
@@ -31,13 +33,23 @@ function App() {
   async function signOut() {
     await supabase.auth.signOut();
   }
-
+  
+  //test
+  const changeTheme = (backgroundColor, textColor) => {
+    setThemeColor(backgroundColor); // Update state with selected color
+    document.documentElement.style.setProperty('--primary-bkg', backgroundColor); // Update background color CSS variable
+    document.documentElement.style.setProperty('--primary-txt', textColor); // Update text color CSS variable
+    setShowThemeDropdown(false); // Close the dropdown after selection
+  };
+   //end test
+  
   const openAddEventWindow = () => {
     const eventWindow = window.open(
       '',
       '_blank',
       'width=600,height=700,scrollbars=yes,resizable=yes'
     );
+	
 
     if (eventWindow) {
       eventWindow.document.title = 'Add Google Calendar Event';
@@ -51,6 +63,8 @@ function App() {
         const [end, setEnd] = useState(new Date());
         const [eventName, setEventName] = useState('');
         const [eventDescription, setEventDescription] = useState('');
+
+		
 
         const createCalendarEvent = async () => {
           const event = {
@@ -92,10 +106,14 @@ function App() {
         return (
           <div style={{ padding: '20px', fontFamily: 'Arial' }}>
             <h2>Add Google Calendar Event</h2>
-            <p>Start of your event</p>
-            <DateTimePicker onChange={setStart} value={start} />
-            <p>End of your event</p>
-            <DateTimePicker onChange={setEnd} value={end} />
+            <p>Start of your event:</p>
+			<DateTimePicker
+				onChange={setStart} value={start}
+			/>
+            <p>End of your event:</p>
+            <DateTimePicker 
+				onChange={setEnd} value={end}
+			/>
             <p>Event name</p>
             <input
               type="text"
@@ -128,31 +146,63 @@ function App() {
     <div className="App">
       {session ? (
         <div className="container">
-          <div className="left">
+          <div className="dropdown-container">
+            <button
+              className="dropdown-toggle"
+              onClick={() => setShowDropdown(!showDropdown)}
+            >
+              Dropdown
+            </button>
+            {showDropdown && (
+              <div className="dropdown-menu">
+                {/* Google Calendar Event Option */}
+                <button
+                  className="dropdown-item"
+                  onClick={() => {
+                    setShowDropdown(false);
+                    openAddEventWindow();
+                  }}
+                >
+                  Add Google Calendar Event
+                </button>
+
+                {/* Theme Color Selection Options */}
+                <div className="dropdown-divider"></div> {/* Divider for better UI */}
+                <button
+                  className="dropdown-item"
+                  onClick={() => changeTheme('#4c2a56', '#b38add')} // Purple theme
+                >
+                  Purple
+                </button>
+                <button
+                  className="dropdown-item"
+                  onClick={() => changeTheme('#150775', '#84a2ff')} // Blue theme
+                >
+                  Blue
+                </button>
+                <button
+                  className="dropdown-item"
+                  onClick={() => changeTheme('#053f1feb', '#88ff84')} // Green theme
+                >
+                  Green
+                </button>
+                <button
+                  className="dropdown-item"
+                  onClick={() => changeTheme('#5f0404eb', '#f18f9d')} // Red theme
+                >
+                  Red
+                </button>
+              </div>
+            )}
+          </div>
+		 
+		  
+		  <div className="left">
             <Calendar />
           </div>
+		  
           <div className="right">
-            <div className="dropdown-container">
-              <button
-                className="dropdown-toggle"
-                onClick={() => setShowDropdown(!showDropdown)}
-              >
-                Dropdown
-              </button>
-              {showDropdown && (
-                <div className="dropdown-menu">
-                  <button
-                    className="dropdown-item"
-                    onClick={() => {
-                      setShowDropdown(false);
-                      openAddEventWindow();
-                    }}
-                  >
-                    Add Google Calendar Event
-                  </button>
-                </div>
-              )}
-            </div>
+            
             <div className="weather-section">
               <h1>Current Weather</h1>
               <Weather />
@@ -164,7 +214,16 @@ function App() {
           <button onClick={googleSignIn}>Sign In With Google</button>
         </div>
       )}
+    
+  
+  <footer className="developer-banner">
+        <div className="developer-info">
+          <p>Developed by: OkState CS4273 Group 5</p>
+          <p>Contact: Aidan Davenport | aidan.davenport@okstate.edu</p>
+        </div>
+      </footer>
     </div>
+  
   );
 }
 
