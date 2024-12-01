@@ -129,6 +129,21 @@
   color: var(--primary-txt);
 }
 
+
+.delete-event-btn {
+  padding: 5px 10px;
+  margin-top: 5px;
+  background-color: #f44336;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.delete-event-btn:hover {
+  background-color: #d32f2f;
+}
+
 .calendar .goto-today button {
   padding: 5px 10px;
   border: 1px solid var(--primary-txt);
