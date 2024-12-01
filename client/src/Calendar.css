@@ -19,16 +19,16 @@ html, body {
 /* Ensure container fills the screen */
 .container {
   display: flex;
-  justify-content: space-between;
-  align-items: stretch;
+  justify-content: center;
   width: 100%; /* Make sure it's 100% of the screen width */
-  height: 100%; /* Make sure it's 100% of the screen height */
-  
+  height: 80%; /* Make sure it's 100% of the screen height */
+  min-height: 78.40vh;
+  overflow: hidden;
 }
 
 /* Left Section: Calendar */
 .left {
-  width: 60%;
+  width: 80%;
   background-color: #f9f9f9;
   border-radius: 8px;
   padding: 20px;
