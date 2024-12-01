@@ -6,11 +6,24 @@
   font-family: Arial, sans-serif;
 }
 
-/* Container holding both left and right sections */
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 100%;
+  background-color: var(--background-color);
+  font-size: 14px;
+  color: var(--text-color);
+}
+
+/* Ensure container fills the screen */
 .container {
   display: flex;
   justify-content: space-between;
-  padding: 20px;
+  align-items: stretch;
+  width: 100%; /* Make sure it's 100% of the screen width */
+  height: 100%; /* Make sure it's 100% of the screen height */
+  
 }
 
 /* Left Section: Calendar */
