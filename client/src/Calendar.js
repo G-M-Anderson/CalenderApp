@@ -71,9 +71,7 @@ const Calendar = () => {
       daysArr.push(
         <div
           key={`day-${day}`}
-          className={`day ${isToday ? "today" : ""} ${
-            eventForDay ? "event" : ""
-          }`}
+          className={`day ${isToday ? "today" : ""} ${eventForDay ? "event" : ""}`}
           onClick={() => setActiveDay(day)}
         >
           {day}
@@ -99,17 +97,21 @@ const Calendar = () => {
     setEventsArr(updatedEvents);
     localStorage.setItem('events', JSON.stringify(updatedEvents));
   };
-  
-
 
   const prevMonth = () => {
-    setMonth(month === 0 ? 11 : month - 1);
-    if (month === 0) setYear(year - 1);
+    const newDate = new Date(year, month, 1);
+    newDate.setMonth(newDate.getMonth() - 1);
+    setMonth(newDate.getMonth());
+    setYear(newDate.getFullYear());
+    setActiveDay(newDate.getDate());
   };
 
   const nextMonth = () => {
-    setMonth(month === 11 ? 0 : month + 1);
-    if (month === 11) setYear(year + 1);
+    const newDate = new Date(year, month, 1);
+    newDate.setMonth(newDate.getMonth() + 1);
+    setMonth(newDate.getMonth());
+    setYear(newDate.getFullYear());
+    setActiveDay(newDate.getDate());
   };
 
   const addEvent = () => {
@@ -154,6 +156,7 @@ const Calendar = () => {
     <div className="container">
       {/* Left Panel (Calendar) */}
       <div className="left">
+        <div className="cascade-layer"></div>
         <div className="calendar">
           <div className="month">
             <i className="fas fa-angle-left prev" onClick={prevMonth}></i>

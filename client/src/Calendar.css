@@ -29,10 +29,40 @@ html, body {
 /* Left Section: Calendar */
 .left {
   width: 80%;
+  position: relative;
+  padding: 20px;
   background-color: #f9f9f9;
   border-radius: 8px;
-  padding: 20px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+/* Add another layer with ::after for a deeper effect */
+.left::after {
+  content: '';
+  position: absolute;
+  top: 20%; /* Further offset to simulate a cascading effect */
+  left: -20px;
+  right: -20px;
+  background-color: #28a745; /* A different color for variety */
+  height: 100%;
+  z-index: -2; /* Behind the first layer */
+  border-radius: 8px;
+}
+
+/* Add styles to make sure the prev/next buttons are visible */
+.prev, .next {
+  font-size: 24px;
+  cursor: pointer;
+  background-color: transparent;
+  border: none;
+  color: #007bff;
+  transition: color 0.3s ease;
+  display: inline-block; /* Ensure they're treated as inline elements */
+}
+
+.prev:hover, .next:hover {
+  color: #0056b3;
 }
 
 /* Header section for Calendar */
@@ -45,10 +75,6 @@ html, body {
   font-weight: bold;
 }
 
-.prev, .next {
-  font-size: 24px;
-  cursor: pointer;
-}
 
 .date {
   text-align: center;
@@ -168,11 +194,16 @@ html, body {
 }
 
 .event-dropdowns {
-  margin-bottom: 20px;
+  margin-bottom: 10px;
+  position: relative; /* Needed for absolute positioning of dropdown content */
+  overflow: auto;
 }
 
 .dropdown {
-  margin-bottom: 10px;
+  margin-bottom: 20px;
+  position: relative; /* Needed for absolute positioning of dropdown content */
+  overflow: auto;
+  
 }
 
 .dropbtn {
@@ -198,10 +229,12 @@ html, body {
   padding: 10px;
   border-radius: 4px;
   width: 100%;
+  overflow: auto;
 }
 
 .dropdown:hover .dropdown-content {
   display: block;
+  overflow: auto;
 }
 
 .dropdown-content div {
@@ -210,6 +243,7 @@ html, body {
 
 .events .event {
   margin-top: 10px;
+  overflow: auto;
 }
 
 .event .title {
@@ -236,6 +270,7 @@ html, body {
   padding: 20px;
   border-radius: 8px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  overflow: auto;
 }
 
 .add-event-header {
