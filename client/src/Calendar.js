@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import './Calendar.css';  // Ensure you include your CSS
+import './Calendar.css'; // Make sure the CSS file is updated
 
 const Calendar = () => {
   const months = [
@@ -108,106 +108,108 @@ const Calendar = () => {
 
   return (
     <div className="container">
-    <div className="left">
-      <div className="calendar">
-        <div className="month">
-          <i className="fas fa-angle-left prev" onClick={prevMonth}></i>
-          <div className="date">{months[month]} {year}</div>
-          <i className="fas fa-angle-right next" onClick={nextMonth}></i>
-        </div>
-
-        <div className="weekdays">
-          <div>Sun</div>
-          <div>Mon</div>
-          <div>Tue</div>
-          <div>Wed</div>
-          <div>Thu</div>
-          <div>Fri</div>
-          <div>Sat</div>
-        </div>
-
-        <div className="days">
-          {days}
-        </div>
-
-        <div className="goto-today">
-          <div className="goto">
-            <input type="text" placeholder="mm/yyyy" className="date-input" />
-            <button className="goto-btn" onClick={() => initCalendar()}>Go</button>
+      {/* Left Panel (Calendar) */}
+      <div className="left">
+        <div className="calendar">
+          <div className="month">
+            <i className="fas fa-angle-left prev" onClick={prevMonth}></i>
+            <div className="date">{months[month]} {year}</div>
+            <i className="fas fa-angle-right next" onClick={nextMonth}></i>
           </div>
-          <button className="today-btn" onClick={() => {
-            setMonth(new Date().getMonth());
-            setYear(new Date().getFullYear());
-          }}>Today</button>
-        </div>
-      </div>
-    </div>
 
-    <div className="right">
-      <div className="today-date">
-        <div className="event-day">{new Date(year, month, activeDay).toLocaleString('en-us', { weekday: 'long' })}</div>
-        <div className="event-date">{activeDay} {months[month]} {year}</div>
-      </div>
-      <div id="current-time">Current Time: <span>{currentTime}</span></div>
-
-      <div className="event-dropdowns">
-        <div className="dropdown">
-          <button className="dropbtn">Upcoming Events This Week</button>
-          <div className="dropdown-content">
-            {getWeekEvents().map((event, index) => (
-              <div key={index}>{event.day} {months[event.month - 1]}: {event.events[0].title} ({event.events[0].time})</div>
-            ))}
+          <div className="weekdays">
+            <div>Sun</div>
+            <div>Mon</div>
+            <div>Tue</div>
+            <div>Wed</div>
+            <div>Thu</div>
+            <div>Fri</div>
+            <div>Sat</div>
           </div>
-        </div>
 
-        <div className="dropdown">
-          <button className="dropbtn">Upcoming Events This Month</button>
-          <div className="dropdown-content">
-            {getMonthEvents().map((event, index) => (
-              <div key={index}>{event.day} {months[event.month - 1]}: {event.events[0].title} ({event.events[0].time})</div>
-            ))}
+          <div className="days">
+            {days}
           </div>
-        </div>
-      </div>
 
-      <div className="events">
-        {eventsArr.filter(event => event.day === activeDay && event.month === month + 1 && event.year === year).map((event, index) => (
-          <div key={index} className="event">
-            <div className="title">
-              <i className="fas fa-circle"></i>
-              <h3 className="event-title">{event.events[0].title}</h3>
+          <div className="goto-today">
+            <div className="goto">
+              <input type="text" placeholder="mm/yyyy" className="date-input" />
+              <button className="goto-btn" onClick={() => initCalendar()}>Go</button>
             </div>
-            <div className="event-time">
-              <span className="event-time">{event.events[0].time}</span>
+            <button className="today-btn" onClick={() => {
+              setMonth(new Date().getMonth());
+              setYear(new Date().getFullYear());
+            }}>Today</button>
+          </div>
+        </div>
+      </div>
+
+      {/* Right Panel (Event Details) */}
+      <div className="right">
+        <div className="today-date">
+          <div className="event-day">{new Date(year, month, activeDay).toLocaleString('en-us', { weekday: 'long' })}</div>
+          <div className="event-date">{activeDay} {months[month]} {year}</div>
+        </div>
+        <div id="current-time">Current Time: <span>{currentTime}</span></div>
+
+        <div className="event-dropdowns">
+          <div className="dropdown">
+            <button className="dropbtn">Upcoming Events This Week</button>
+            <div className="dropdown-content">
+              {getWeekEvents().map((event, index) => (
+                <div key={index}>{event.day} {months[event.month - 1]}: {event.events[0].title} ({event.events[0].time})</div>
+              ))}
             </div>
           </div>
-        ))}
-      </div>
 
-      {/* Add Event Form */}
-      {showEventForm && (
-        <div className="add-event-wrapper">
-          <div className="add-event-header">
-            <div className="title">Add Event</div>
-            <i className="fas fa-times close" onClick={() => setShowEventForm(false)}></i>
-          </div>
-          <div className="add-event-body">
-            <input type="text" placeholder="Event Name" value={eventName} onChange={(e) => setEventName(e.target.value)} />
-            <input type="text" placeholder="Event Time From" value={eventTimeFrom} onChange={(e) => setEventTimeFrom(e.target.value)} />
-            <input type="text" placeholder="Event Time To" value={eventTimeTo} onChange={(e) => setEventTimeTo(e.target.value)} />
-          </div>
-          <div className="add-event-footer">
-            <button className="add-event-btn" onClick={addEvent}>Add Event</button>
+          <div className="dropdown">
+            <button className="dropbtn">Upcoming Events This Month</button>
+            <div className="dropdown-content">
+              {getMonthEvents().map((event, index) => (
+                <div key={index}>{event.day} {months[event.month - 1]}: {event.events[0].title} ({event.events[0].time})</div>
+              ))}
+            </div>
           </div>
         </div>
-      )}
 
-      {/* Add Event Button */}
-      <button className="add-event" onClick={() => setShowEventForm(true)}>
-        <i className="fas fa-plus">Create event</i>
-      </button>
+        <div className="events">
+          {eventsArr.filter(event => event.day === activeDay && event.month === month + 1 && event.year === year).map((event, index) => (
+            <div key={index} className="event">
+              <div className="title">
+                <i className="fas fa-circle"></i>
+                <h3 className="event-title">{event.events[0].title}</h3>
+              </div>
+              <div className="event-time">
+                <span className="event-time">{event.events[0].time}</span>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* Add Event Form */}
+        {showEventForm && (
+          <div className="add-event-wrapper">
+            <div className="add-event-header">
+              <div className="title">Add Event</div>
+              <i className="fas fa-times close" onClick={() => setShowEventForm(false)}></i>
+            </div>
+            <div className="add-event-body">
+              <input type="text" placeholder="Event Name" value={eventName} onChange={(e) => setEventName(e.target.value)} />
+              <input type="text" placeholder="Event Time From" value={eventTimeFrom} onChange={(e) => setEventTimeFrom(e.target.value)} />
+              <input type="text" placeholder="Event Time To" value={eventTimeTo} onChange={(e) => setEventTimeTo(e.target.value)} />
+            </div>
+            <div className="add-event-footer">
+              <button className="add-event-btn" onClick={addEvent}>Add Event</button>
+            </div>
+          </div>
+        )}
+
+        {/* Add Event Button */}
+        <button className="add-event" onClick={() => setShowEventForm(true)}>
+          <i className="fas fa-plus">Create event</i>
+        </button>
+      </div>
     </div>
-  </div>
   );
 };
 
