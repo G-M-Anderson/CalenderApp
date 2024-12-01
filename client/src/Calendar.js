@@ -3,20 +3,32 @@ import './Calendar.css'; // Make sure the CSS file is updated
 
 const Calendar = () => {
   const months = [
-    'January', 'February', 'March', 'April', 'May', 'June', 'July',
-    'August', 'September', 'October', 'November', 'December'
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
   ];
 
   const [activeDay, setActiveDay] = useState(new Date().getDate());
   const [month, setMonth] = useState(new Date().getMonth());
   const [year, setYear] = useState(new Date().getFullYear());
   const [days, setDays] = useState([]);
-  const [eventsArr, setEventsArr] = useState(JSON.parse(localStorage.getItem('events')) || []);
+  const [eventsArr, setEventsArr] = useState(
+    JSON.parse(localStorage.getItem("events")) || []
+  );
   const [showEventForm, setShowEventForm] = useState(false);
-  const [eventName, setEventName] = useState('');
-  const [eventTimeFrom, setEventTimeFrom] = useState('');
-  const [eventTimeTo, setEventTimeTo] = useState('');
-  const [currentTime, setCurrentTime] = useState('');
+  const [eventName, setEventName] = useState("");
+  const [eventTimeFrom, setEventTimeFrom] = useState("");
+  const [eventTimeTo, setEventTimeTo] = useState("");
+  const [currentTime, setCurrentTime] = useState("");
 
   // Update the time every second
   useEffect(() => {
@@ -39,17 +51,29 @@ const Calendar = () => {
 
     // Previous month's days (fill in)
     for (let x = firstDay; x > 0; x--) {
-      daysArr.push(<div key={`prev-${x}`} className="day prev-date">{prevLastDate - x + 1}</div>);
+      daysArr.push(
+        <div key={`prev-${x}`} className="day prev-date">
+          {prevLastDate - x + 1}
+        </div>
+      );
     }
 
     // Current month's days
     for (let day = 1; day <= lastDate; day++) {
-      const isToday = day === new Date().getDate() && month === new Date().getMonth() && year === new Date().getFullYear();
-      const eventForDay = eventsArr.some(event => event.day === day && event.month === month + 1 && event.year === year);
+      const isToday =
+        day === new Date().getDate() &&
+        month === new Date().getMonth() &&
+        year === new Date().getFullYear();
+      const eventForDay = eventsArr.some(
+        (event) =>
+          event.day === day && event.month === month + 1 && event.year === year
+      );
       daysArr.push(
         <div
           key={`day-${day}`}
-          className={`day ${isToday ? 'today' : ''} ${eventForDay ? 'event' : ''}`}
+          className={`day ${isToday ? "today" : ""} ${
+            eventForDay ? "event" : ""
+          }`}
           onClick={() => setActiveDay(day)}
         >
           {day}
@@ -60,11 +84,23 @@ const Calendar = () => {
     // Fill next month's days
     const nextDays = 7 - (daysArr.length % 7);
     for (let j = 1; j <= nextDays; j++) {
-      daysArr.push(<div key={`next-${j}`} className="day next-date">{j}</div>);
+      daysArr.push(
+        <div key={`next-${j}`} className="day next-date">
+          {j}
+        </div>
+      );
     }
 
     setDays(daysArr);
   };
+
+  const deleteEvent = (eventToDelete) => {
+    const updatedEvents = eventsArr.filter(event => event !== eventToDelete);
+    setEventsArr(updatedEvents);
+    localStorage.setItem('events', JSON.stringify(updatedEvents));
+  };
+  
+
 
   const prevMonth = () => {
     setMonth(month === 0 ? 11 : month - 1);
@@ -81,16 +117,16 @@ const Calendar = () => {
       day: activeDay,
       month: month + 1,
       year: year,
-      events: [{ title: eventName, time: `${eventTimeFrom} - ${eventTimeTo}` }]
+      events: [{ title: eventName, time: `${eventTimeFrom} - ${eventTimeTo}` }],
     };
 
     const updatedEvents = [...eventsArr, newEvent];
     setEventsArr(updatedEvents);
-    localStorage.setItem('events', JSON.stringify(updatedEvents));
+    localStorage.setItem("events", JSON.stringify(updatedEvents));
 
-    setEventName('');
-    setEventTimeFrom('');
-    setEventTimeTo('');
+    setEventName("");
+    setEventTimeFrom("");
+    setEventTimeTo("");
     setShowEventForm(false);
   };
 
@@ -99,11 +135,19 @@ const Calendar = () => {
     const firstDayOfWeek = today.getDate() - today.getDay(); // Get first day of the week
     const lastDayOfWeek = firstDayOfWeek + 6; // Get last day of the week
 
-    return eventsArr.filter(event => event.day >= firstDayOfWeek && event.day <= lastDayOfWeek && event.month === month + 1 && event.year === year);
+    return eventsArr.filter(
+      (event) =>
+        event.day >= firstDayOfWeek &&
+        event.day <= lastDayOfWeek &&
+        event.month === month + 1 &&
+        event.year === year
+    );
   };
 
   const getMonthEvents = () => {
-    return eventsArr.filter(event => event.month === month + 1 && event.year === year);
+    return eventsArr.filter(
+      (event) => event.month === month + 1 && event.year === year
+    );
   };
 
   return (
