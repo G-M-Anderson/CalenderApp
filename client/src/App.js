@@ -34,14 +34,14 @@ function App() {
     await supabase.auth.signOut();
   }
   
-  //test
+
   const changeTheme = (backgroundColor, textColor) => {
     setThemeColor(backgroundColor); // Update state with selected color
     document.documentElement.style.setProperty('--primary-bkg', backgroundColor); // Update background color CSS variable
     document.documentElement.style.setProperty('--primary-txt', textColor); // Update text color CSS variable
     setShowThemeDropdown(false); // Close the dropdown after selection
   };
-   //end test
+
   
   const openAddEventWindow = () => {
     const eventWindow = window.open(
