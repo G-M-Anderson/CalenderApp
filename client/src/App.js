@@ -10,8 +10,8 @@ function App() {
   const supabase = useSupabaseClient();
   const { isLoading } = useSessionContext();
   const [showDropdown, setShowDropdown] = useState(false);
-  const [showThemeDropdown, setShowThemeDropdown] = useState(false); //tst
-  const [themeColor, setThemeColor] = useState('purple'); //test
+  const [showThemeDropdown, setShowThemeDropdown] = useState(false); 
+  const [themeColor, setThemeColor] = useState('purple'); 
 
   if (isLoading) {
     return <></>; // Loading state
@@ -52,7 +52,7 @@ function App() {
 	
 
     if (eventWindow) {
-      eventWindow.document.title = 'Add Google Calendar Event';
+	  eventWindow.document.title = 'Add Google Calendar Event';
       eventWindow.document.body.innerHTML = `
         <div id="event-form-root"></div>
       `;
@@ -67,44 +67,56 @@ function App() {
 		
 
         const createCalendarEvent = async () => {
-          const event = {
-            summary: eventName,
-            description: eventDescription,
-            start: {
-              dateTime: start.toISOString(),
-              timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone,
-            },
-            end: {
-              dateTime: end.toISOString(),
-              timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone,
-            },
-          };
+		  const token = session?.provider_token;
 
-          try {
-            const response = await fetch(
-              'https://www.googleapis.com/calendar/v3/calendars/primary/events',
-              {
-                method: 'POST',
-                headers: {
-                  Authorization: 'Bearer ' + session.provider_token,
-                },
-                body: JSON.stringify(event),
-              }
-            );
+		  if (!token) {
+			alert("No valid OAuth token found.");
+			return;
+		  }
+				  
+		  const event = {
+			summary: eventName,
+			description: eventDescription,
+			start: {
+			  dateTime: start.toISOString(),
+			  timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+			},
+			end: {
+			  dateTime: end.toISOString(),
+			  timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+			},
+		  };
 
-            if (response.ok) {
-              alert('Event created successfully!');
-              eventWindow.close();
-            } else {
-              alert('Failed to create event. Please check your Google credentials.');
-            }
-          } catch (err) {
-            console.error('Error creating event:', err);
-          }
-        };
+		  try {
+			const response = await fetch(
+			  'https://www.googleapis.com/calendar/v3/calendars/primary/events',
+			  {
+				method: 'POST',
+				headers: {
+				  Authorization: 'Bearer ' + session.provider_token, // Ensure the token is valid
+				  'Content-Type': 'application/json',
+				},
+				body: JSON.stringify(event),
+			  }
+			);
+
+			if (response.ok) {
+			  alert('Event created successfully!');
+			  eventWindow.close();
+			} else {
+			  const errorData = await response.json();
+			  console.error('Failed to create event:', errorData);
+			  alert(`Failed to create event: ${errorData.error.message}`);
+			}
+		  } catch (err) {
+			console.error('Error creating event:', err);
+			alert(`Error creating event: ${err.message}`);
+		  }
+		};
+
 
         return (
-          <div style={{ padding: '20px', fontFamily: 'Arial' }}>
+          <div style={{ padding: '20px', fontFamily: 'Arial', color: '#b38add', backgroundColor: '#4c2a56'}}>
             <h2>Add Google Calendar Event</h2>
             <p>Start of your event:</p>
 			<DateTimePicker
@@ -154,8 +166,10 @@ function App() {
               Dropdown
             </button>
             {showDropdown && (
-              <div className="dropdown-menu">
-                {/* Google Calendar Event Option */}
+				
+			  <div className="dropdown-menu">
+                
+				{/* Google Calendar Event Option */}
                 <button
                   className="dropdown-item"
                   onClick={() => {
@@ -165,33 +179,65 @@ function App() {
                 >
                   Add Google Calendar Event
                 </button>
+				{/* Divider */}
+				<div className="dropdown-divider"></div>
+				{/*Sign in Button */}
+				<button 
+				className="dropdown-item"
+				onClick={googleSignIn}
+				>
+				  Sign In With Google
+				</button>
+				{/* Divider */}
+				<div className="dropdown-divider"></div>
+				{/*Sign Out Button */}
+				<button 
+				className="dropdown-item"
+				onClick={signOut}
+				>
+				  Google Sign Out 
+				</button>
+				{/* Divider */}
+				<div className="dropdown-divider"></div>
 
                 {/* Theme Color Selection Options */}
-                <div className="dropdown-divider"></div> {/* Divider for better UI */}
-                <button
-                  className="dropdown-item"
-                  onClick={() => changeTheme('#4c2a56', '#b38add')} // Purple theme
-                >
-                  Purple
-                </button>
-                <button
-                  className="dropdown-item"
-                  onClick={() => changeTheme('#150775', '#84a2ff')} // Blue theme
-                >
-                  Blue
-                </button>
-                <button
-                  className="dropdown-item"
-                  onClick={() => changeTheme('#053f1feb', '#88ff84')} // Green theme
-                >
-                  Green
-                </button>
-                <button
-                  className="dropdown-item"
-                  onClick={() => changeTheme('#5f0404eb', '#f18f9d')} // Red theme
-                >
-                  Red
-                </button>
+				<button
+				  className="dropdown-item"
+				  onClick={() => setShowThemeDropdown(!showThemeDropdown)} // Toggle theme dropdown
+				>
+				  Theme
+				</button>
+				
+				{showThemeDropdown && (
+				  <div className="theme-dropdown-menu">
+					<button
+					  className="dropdown-item"
+					  onClick={() => changeTheme('#4c2a56', '#b38add')} // Purple theme
+					>
+					  Purple
+					</button>
+					<button
+					  className="dropdown-item"
+					  onClick={() => changeTheme('#150775', '#84a2ff')} // Blue theme
+					>
+					  Blue
+					</button>
+					<button
+					  className="dropdown-item"
+					  onClick={() => changeTheme('#053f1feb', '#16cc55')} // Green theme
+					>
+					  Green
+					</button>
+					<button
+					  className="dropdown-item"
+					  onClick={() => changeTheme('#5f0404eb', '#f18f9d')} // Red theme
+					>
+					  Red
+					</button>
+				  </div>
+				)}
+				
+				
               </div>
             )}
           </div>
