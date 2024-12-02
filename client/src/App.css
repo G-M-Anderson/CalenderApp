@@ -43,6 +43,8 @@
 }
 
 
+/*****************************************************************************/
+
 .left {
   flex: 3; /* Adjust the width ratio of the calendar */
   margin-right: 20px;
@@ -60,7 +62,6 @@
   padding: 20px;
   border: 1px solid #ccc;
   border-radius: 3px;
-  background-color: #f9f9f9;
 }
 
 .login-container {

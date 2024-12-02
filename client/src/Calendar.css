@@ -11,7 +11,7 @@ html, body {
   padding: 0;
   height: 100%;
   width: 100%;
-  background-color: var(--background-color);
+  background-color: var(--primary-bkg);
   font-size: 14px;
   color: var(--text-color);
 }
@@ -112,12 +112,12 @@ html, body {
 }
 
 .today {
-  background-color: #007bff;
+  background-color: var(--primary-bkg);
   color: white;
 }
 
 .event {
-  background-color: #f0f8ff;
+  background-color: #e0e0e0;
 }
 
 .prev-date, .next-date {
@@ -207,7 +207,7 @@ html, body {
 }
 
 .dropbtn {
-  background-color: #007bff;
+  background-color: var(--primary-bkg);
   color: white;
   padding: 10px 15px;
   border: none;
@@ -300,7 +300,7 @@ html, body {
 }
 
 .add-event-btn {
-  background-color: #007bff;
+  background-color: var(--primary-bkg);
   color: white;
   padding: 8px 20px;
   border: none;
@@ -340,7 +340,7 @@ html, body {
 
 .add-event {
   margin-top: 20px;
-  background-color: #007bff;
+  background-color: var(--primary-bkg);
   color: white;
   padding: 10px 20px;
   border: none;
