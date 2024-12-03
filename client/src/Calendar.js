@@ -300,7 +300,6 @@ const Calendar = () => {
           </div>
 
         </div>
-        <div id="current-time">Current Time: <span>{currentTime}</span></div>
 
 
         <div className="events">
