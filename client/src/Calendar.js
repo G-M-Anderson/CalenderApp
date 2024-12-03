@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
+
 import { useSession, useSupabaseClient, useSessionContext } from '@supabase/auth-helpers-react'; //google int test
 import './Calendar.css'; 
+
 
 const Calendar = () => {
   const months = [
@@ -30,9 +32,9 @@ const Calendar = () => {
   const [eventTimeFrom, setEventTimeFrom] = useState("");
   const [eventTimeTo, setEventTimeTo] = useState("");
   const [currentTime, setCurrentTime] = useState("");
+
   const [eventDate, setEventDate] = useState("");
-  
-  
+
 
   // Update the time every second
   useEffect(() => {
@@ -125,7 +127,9 @@ const Calendar = () => {
       month: month,
       year: year,
       events: [{ title: eventName, time: `${eventTimeFrom} - ${eventTimeTo}` }],
-	};
+
+    };
+
 
     const updatedEvents = [...eventsArr, newEvent];
     setEventsArr(updatedEvents);
@@ -134,9 +138,11 @@ const Calendar = () => {
     setEventName("");
     setEventTimeFrom("");
     setEventTimeTo("");
+
 	setEventDate("");
 	// Create the event in Google Calendar as well
     createGoogleCalendarEvent(eventName, eventTimeFrom, eventTimeTo, eventDate);
+
     setShowEventForm(false);
   };
   
@@ -270,6 +276,7 @@ const Calendar = () => {
         <div className="today-date">
           <div className="event-day">{new Date(year, month, activeDay).toLocaleString('en-us', { weekday: 'long' })}</div>
           <div className="event-date">{activeDay} {months[month]} {year}</div>
+
         </div>
         <div id="current-time">Current Time: <span>{currentTime}</span></div>
 		{/* Display this week's events */}
@@ -291,7 +298,10 @@ const Calendar = () => {
               ))}
             </div>
           </div>
+
         </div>
+        <div id="current-time">Current Time: <span>{currentTime}</span></div>
+
 
         <div className="events">
           {eventsArr.filter(event => event.day === activeDay && event.month === month + 1 && event.year === year).map((event, index) => (
@@ -325,6 +335,7 @@ const Calendar = () => {
             </div>
           </div>
         )}
+
 
         {/* Add Event Button */}
         <button className="add-event" onClick={() => setShowEventForm(true)}>
