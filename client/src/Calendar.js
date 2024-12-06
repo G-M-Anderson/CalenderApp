@@ -3,7 +3,6 @@ import React, { useState, useEffect } from 'react';
 import { useSession, useSupabaseClient, useSessionContext } from '@supabase/auth-helpers-react'; //google int test
 import './Calendar.css'; 
 
-
 const Calendar = () => {
   const months = [
     "January",
@@ -127,10 +126,8 @@ const Calendar = () => {
       month: month,
       year: year,
       events: [{ title: eventName, time: `${eventTimeFrom} - ${eventTimeTo}` }],
-
     };
-
-
+	  
     const updatedEvents = [...eventsArr, newEvent];
     setEventsArr(updatedEvents);
     localStorage.setItem("events", JSON.stringify(updatedEvents));
@@ -138,11 +135,9 @@ const Calendar = () => {
     setEventName("");
     setEventTimeFrom("");
     setEventTimeTo("");
-
-	setEventDate("");
-	// Create the event in Google Calendar as well
+    setEventDate("");
+    // Create the event in Google Calendar as well
     createGoogleCalendarEvent(eventName, eventTimeFrom, eventTimeTo, eventDate);
-
     setShowEventForm(false);
   };
   
@@ -158,41 +153,37 @@ const Calendar = () => {
       return;
     }
 	
-	// Helper function to combine event date and time
-	  const combineDateAndTime = (eventDate, eventTime) => {
-		const [year, month, day] = eventDate.split("-").map(Number); // eventDate in "YYYY-MM-DD"
-		const [hours, minutes] = eventTime.split(":").map(Number);  // eventTime in "HH:mm"
-		
-		const date = new Date(year, month - 1, day);  // Month is 0-based in JS Date object
-		date.setHours(hours, minutes, 0, 0); // Set the time on the specific date
-		
-		return date;
-	  };
+    // Helper function to combine event date and time
+    const combineDateAndTime = (eventDate, eventTime) => {
+	const [year, month, day] = eventDate.split("-").map(Number); // eventDate in "YYYY-MM-DD"
+	const [hours, minutes] = eventTime.split(":").map(Number);  // eventTime in "HH:mm"
+	const date = new Date(year, month - 1, day);  // Month is 0-based in JS Date object
+	date.setHours(hours, minutes, 0, 0); // Set the time on the specific date
+	return date;
+	};
 
-	  // Combine event date with start and end times
-	  const startTime = combineDateAndTime(eventDate, eventTimeFrom);
-	  const endTime = combineDateAndTime(eventDate, eventTimeTo);
-
-	
-	const event = {
-	  summary: eventName,
-      description: 'Event created through the calendar app',
-      start: {
-        dateTime: startTime.toISOString(),
-        timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone,
-      },
-      end: {
-        dateTime: endTime.toISOString(),
-        timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone,
-      },
+    // Combine event date with start and end times
+    const startTime = combineDateAndTime(eventDate, eventTimeFrom);
+    const endTime = combineDateAndTime(eventDate, eventTimeTo);
+    const event = {
+	    summary: eventName,
+            description: 'Event created through the calendar app',
+            start: {
+       		 dateTime: startTime.toISOString(),
+       		 timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+      	    },
+      	    end: {
+        	dateTime: endTime.toISOString(),
+        	timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+            },
     };
 
     try {
       const response = await fetch('https://www.googleapis.com/calendar/v3/calendars/primary/events', {
         method: 'POST',
         headers: {
-          Authorization: `Bearer ${token}`,
-          'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json',
         },
         body: JSON.stringify(event),
       });
@@ -208,9 +199,8 @@ const Calendar = () => {
       console.error('Error creating event:', err);
       alert(`Error creating event: ${err.message}`);
     }
-  };
-	
-	/**********************************************************/
+  };	
+  /***************************end of google event creation*******************************/
 
   const getWeekEvents = () => {
     const today = new Date();
@@ -276,10 +266,11 @@ const Calendar = () => {
         <div className="today-date">
           <div className="event-day">{new Date(year, month, activeDay).toLocaleString('en-us', { weekday: 'long' })}</div>
           <div className="event-date">{activeDay} {months[month]} {year}</div>
-
         </div>
+	      
         <div id="current-time">Current Time: <span>{currentTime}</span></div>
-		{/* Display this week's events */}
+	      
+	{/* Display this week's events */}
         <div className="event-dropdowns">
           <div className="dropdown">
             <button className="dropbtn">Upcoming Events This Week</button>
@@ -289,7 +280,7 @@ const Calendar = () => {
               ))}
             </div>
           </div>
-		  {/* Display this month's events */}
+	  {/* Display this month's events */}
           <div className="dropdown">
             <button className="dropbtn">Upcoming Events This Month</button>
             <div className="dropdown-content">
@@ -298,10 +289,7 @@ const Calendar = () => {
               ))}
             </div>
           </div>
-
         </div>
-
-
         <div className="events">
           {eventsArr.filter(event => event.day === activeDay && event.month === month + 1 && event.year === year).map((event, index) => (
             <div key={index} className="event">
@@ -315,7 +303,6 @@ const Calendar = () => {
             </div>
           ))}
         </div>
-
         {/* Add Event Form */}
         {showEventForm && (
           <div className="add-event-wrapper">
@@ -327,15 +314,13 @@ const Calendar = () => {
               <input type="text" placeholder="Event Name" value={eventName} onChange={(e) => setEventName(e.target.value)} />
               <input type="time" placeholder="Event Time From" value={eventTimeFrom} onChange={(e) => setEventTimeFrom(e.target.value)} />
               <input type="time" placeholder="Event Time To" value={eventTimeTo} onChange={(e) => setEventTimeTo(e.target.value)} />
-			  <input type="date" placeholder="Event Date" value={eventDate} onChange={(e) => setEventDate(e.target.value)} />
+	      <input type="date" placeholder="Event Date" value={eventDate} onChange={(e) => setEventDate(e.target.value)} />
             </div>
             <div className="add-event-footer">
               <button className="add-event-btn" onClick={addEvent}>Add Event</button>
             </div>
           </div>
         )}
-
-
         {/* Add Event Button */}
         <button className="add-event" onClick={() => setShowEventForm(true)}>
           <i className="fas fa-plus">Create event</i>
