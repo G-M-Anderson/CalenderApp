@@ -34,7 +34,6 @@ function App() {
     await supabase.auth.signOut();
   }
   
-
   const changeTheme = (backgroundColor, textColor) => {
     setThemeColor(backgroundColor); // Update state with selected color
     document.documentElement.style.setProperty('--primary-bkg', backgroundColor); // Update background color CSS variable
@@ -42,7 +41,6 @@ function App() {
     setShowThemeDropdown(false); // Close the dropdown after selection
   };
 
-  
   const openAddEventWindow = () => {
     const eventWindow = window.open(
       '',
@@ -50,7 +48,6 @@ function App() {
       'width=600,height=700,scrollbars=yes,resizable=yes'
     );
 	
-
     if (eventWindow) {
 	  eventWindow.document.title = 'Add Google Calendar Event';
       eventWindow.document.body.innerHTML = `
@@ -64,17 +61,13 @@ function App() {
         const [eventName, setEventName] = useState('');
         const [eventDescription, setEventDescription] = useState('');
 
-		
-
         const createCalendarEvent = async () => {
-		  const token = session?.provider_token;
-
-		  if (!token) {
+		const token = session?.provider_token;
+		if (!token) {
 			alert("No valid OAuth token found.");
 			return;
-		  }
-				  
-		  const event = {
+		}
+		const event = {
 			summary: eventName,
 			description: eventDescription,
 			start: {
@@ -149,7 +142,6 @@ function App() {
           </div>
         );
       };
-
       ReactDOM.render(<AddEventForm />, eventWindow.document.getElementById('event-form-root'));
     }
   };
@@ -165,11 +157,9 @@ function App() {
             >
               Dropdown
             </button>
-            {showDropdown && (
-				
-			  <div className="dropdown-menu">
-                
-				{/* Google Calendar Event Option */}
+            {showDropdown && (	
+		<div className="dropdown-menu">
+		{/* Google Calendar Event Option */}
                 <button
                   className="dropdown-item"
                   onClick={() => {
@@ -179,27 +169,26 @@ function App() {
                 >
                   Add Google Calendar Event
                 </button>
-				{/* Divider */}
-				<div className="dropdown-divider"></div>
-				{/*Sign in Button */}
-				<button 
-				className="dropdown-item"
-				onClick={googleSignIn}
-				>
-				  Sign In With Google
-				</button>
-				{/* Divider */}
-				<div className="dropdown-divider"></div>
-				{/*Sign Out Button */}
-				<button 
-				className="dropdown-item"
-				onClick={signOut}
-				>
-				  Google Sign Out 
-				</button>
-				{/* Divider */}
-				<div className="dropdown-divider"></div>
-
+		{/* Divider */}
+		<div className="dropdown-divider"></div>
+		{/*Sign in Button */}
+		<button 
+		  className="dropdown-item"
+		  onClick={googleSignIn}
+		>
+		  Sign In With Google
+		</button>
+		{/* Divider */}
+		<div className="dropdown-divider"></div>
+		{/*Sign Out Button */}
+		<button 
+		  className="dropdown-item"
+		  onClick={signOut}
+		>
+		  Google Sign Out 
+		</button>
+		{/* Divider */}
+		<div className="dropdown-divider"></div>
                 {/* Theme Color Selection Options */}
 				<button
 				  className="dropdown-item"
@@ -235,14 +224,10 @@ function App() {
 					  Red
 					</button>
 				  </div>
-				)}
-				
-				
+				)}		
               </div>
             )}
-          </div>
-		 
-		  
+          </div> 
 		  <div className="left">
             <Calendar />
           </div>
@@ -260,8 +245,8 @@ function App() {
           <button onClick={googleSignIn}>Sign In With Google</button>
         </div>
       )}
-    
-  
+
+  {/*Footer with developer information*/}	      
   <footer className="developer-banner">
         <div className="developer-info">
           <p>Developed by: OkState CS4273 Group 5</p>
@@ -269,7 +254,6 @@ function App() {
         </div>
       </footer>
     </div>
-  
   );
 }
 
